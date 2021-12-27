@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>基于图像识别与目标检测的自动化测试 | Sisyphean</title>
-<link rel="shortcut icon" href="https://sisypheanchen.github.io/favicon.ico?v=1640604647394">
+<link rel="shortcut icon" href="https://sisypheanchen.github.io/favicon.ico?v=1640606333072">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://sisypheanchen.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="基于图像识别与目标检测的自动化测试 | Sisyphean - Atom Feed" href="https://sisypheanchen.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://sisypheanchen.github.io">
-  <img class="avatar" src="https://sisypheanchen.github.io/images/avatar.png?v=1640604647394" alt="">
+  <img class="avatar" src="https://sisypheanchen.github.io/images/avatar.png?v=1640606333072" alt="">
   </a>
   <h1 class="site-title">
     Sisyphean
@@ -109,39 +109,52 @@
 <p>产品人员在策略等相关配置后，需要人为在测试环境（线上预发布）验证各配置的正确性。一般需要3-5个工作日才能完成验证，严重影响了策略发布效率。</p>
 <h2 id="案例说明">案例说明</h2>
 <p>以下为诈骗C拦截完整流程的一个案例，从开始交易拦截到最终尽调解脱，经风险须知、表单风险确认和人脸身份验证过程，接触交易限制。在此过程中，产品测试人员需确认每个环节都符合预期。当然，可以看到在每个环节中，流程都可以终止。</p>
+<figure data-type="image" tabindex="1"><img src="https://sisypheanchen.github.io/post-images/1640605393943.png" alt="" loading="lazy"></figure>
 <p>以上案例场景，为拦截可解脱。此外，还有轻提醒、拦截（FAQ）、拦截（不可解脱）等场景，各场景呈现不同的页面样式特征和体验流程，后续内容会进行详细介绍。</p>
 <h1 id="面临的挑战">面临的挑战</h1>
 <p>挑战1：上线前测试验证周期长。涉及模块多、链路长，测试准备工作分散，沟通协调成本大，上线前测试验证周期平均3~5个工作日。而且全流程人工体验，耗时耗力易遗漏。</p>
-<p>挑战2：已上线配置回归测试挑战大。当前已上线超500个错误码场景，全量回归测试挑战是非常大的。</p>
+<figure data-type="image" tabindex="2"><img src="https://sisypheanchen.github.io/post-images/1640605402850.png" alt="" loading="lazy"></figure>
+<p>挑战2：已上线配置回归测试挑战大。当前已上线超500个错误码场景，全量回归测试挑战是非常大的。<br>
+<img src="https://sisypheanchen.github.io/post-images/1640605408340.png" alt="" loading="lazy"></p>
 <h1 id="系统边界">系统边界</h1>
 <h2 id="关键点分析">关键点分析</h2>
 <p>总体上，我们需要解决两类问题，一类是冒烟测试，一类是回归测试。我们解决的重点问题，如何实现测试自动化。</p>
 <p>回归测试，即历史测试用例的再执行，如果解决了冒烟测试问题，回归测试也就迎刃而解。</p>
 <p>那么问题进一步聚焦，如何实现冒烟测试自动化？</p>
 <p>核心有两点：</p>
-<p>一是终端模拟用户操作<br>
-二是能自动检测识别特征，与预期的原型（或原型实例化成的测试用例）做对比<br>
-我们暂且以上两部分叫做模拟终端和图像模块。</p>
+<ul>
+<li>一是终端模拟用户操作</li>
+<li>二是能自动检测识别特征，与预期的原型（或原型实例化成的测试用例）做对比</li>
+</ul>
+<p>我们暂且以上两部分叫做<strong>模拟终端</strong>和<strong>图像模块</strong>。</p>
 <p>模拟终端比较好理解，可以把终端理解成木得感情的机器人🤖️ 它主要做两件事情：</p>
-<p>在哪里（元素坐标）<br>
-做什么（点击、输入、截图等手机操作系统支持的人为交互操作）<br>
-图像模块</p>
+<ul>
+<li>在哪里（元素坐标）</li>
+<li>做什么（点击、输入、截图等手机操作系统支持的人为交互操作）</li>
+</ul>
+<h2 id="图像模块">图像模块</h2>
 <p>找到感兴趣的特征及其位置<br>
 判断实际运行的截图与预期是否有偏差<br>
 总结来说，模拟终端模拟人的动作，图像模块帮助查找特征与对比。</p>
 <h2 id="测试用例的理解">测试用例的理解</h2>
 <p>模拟终端+图像模块的组合，只是测试流程中的某个孤立点，完整的流程是由点连成线的，并且在点的衔接中可能有输入性交互。因此，还需要一个额外的能力去串联各个孤立的点，本文约定此名为“总线”。</p>
+<figure data-type="image" tabindex="3"><img src="https://sisypheanchen.github.io/post-images/1640605954266.png" alt="" loading="lazy"></figure>
 <p>在业务层面，总线本质上就是测试用例枢纽定义。</p>
 <p>测试用例的定义，跟具体的业务场景有关。有何结合业务去巧妙地拆解测试过程中的关注点，关系到能否避免自动化智能测试演变成“智障”测试。</p>
 <p>首先，这两类问题需要解决的一个前提条件，是测试链路打通（测试环境上下文的准备）。针对模块多，链路长的问题，我们把所有的模块资源整合起来，抽象封装操作能力选项，在产品策略设计阶段就映射落实好，这样测试时的多方协调工作，就已经关联好了。</p>
 <h1 id="系统架构">系统架构</h1>
 <p>通过上述分析，明确了几个重要边界：模拟终端、图像模块、总线和体验引擎。</p>
-<p>架构设计把流程中类似的功能节点抽象成模块，每个模块内聚功能的实现，通过总线与其它模块通信，最终达到体验流程自动化的目标。在具体的实现中，每个模块拆分成对应的微服务并提供原子服务接口，同时会把总线抽象成一个微服务（类似于服务注册中心），集成管理各模块的协议与服务调用。</p>
-<p>总线，终端模拟和体验引擎概念本身比较好理解。这两部分后续团队会有文章详细介绍，本文将重点介绍图像模块。</p>
-<h1 id="图像模块">图像模块</h1>
+<figure data-type="image" tabindex="4"><img src="https://sisypheanchen.github.io/post-images/1640605971349.png" alt="" loading="lazy"></figure>
+<p><em>&quot;架构设计把流程中类似的功能节点抽象成模块，每个模块内聚功能的实现，通过总线与其它模块通信，最终达到体验流程自动化的目标。在具体的实现中，每个模块拆分成对应的微服务并提供原子服务接口，同时会把总线抽象成一个微服务（类似于服务注册中心），集成管理各模块的协议与服务调用。&quot;</em></p>
+<figure data-type="image" tabindex="5"><img src="https://sisypheanchen.github.io/post-images/1640605979430.png" alt="" loading="lazy"></figure>
+<p>总线，终端模拟和体验引擎概念本身比较好理解。本文重点介绍图像模块。</p>
+<h1 id="图像模块-2">图像模块</h1>
 <p>图像模块找到感兴趣的特征，涉及交互的特征还需要输出位置信息，供模拟引擎使用。图像的与预期一致的对比，则需要结合业务定义，比较初级的对比主要是特征的比对（如特征个数，文字信息）。以下列举了几个业务场景的体验流程。</p>
+<figure data-type="image" tabindex="6"><img src="https://sisypheanchen.github.io/post-images/1640606093655.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://sisypheanchen.github.io/post-images/1640606101110.png" alt="" loading="lazy"></figure>
 <p>不同场景所需要建立的特征工程不同。比如弹窗页面，关注弹窗内容以及按钮选项；FAQ页面，关注提示的FAQ文本信息；风险提示页面，关注风险提示文本以及按钮选项，有些需要关注复选框信息以及对应的文本选项内容。</p>
 <p>以上我们可以看出，如果采用单个模型去解决这类问题是比较复杂的。一个可靠的方案是按照识别场景，将复杂的特征提取转换成图像分类 + 目标检测问题。</p>
+<figure data-type="image" tabindex="8"><img src="https://sisypheanchen.github.io/post-images/1640606116816.png" alt="" loading="lazy"></figure>
 <p>第一步是分类（自动或人工）场景，这样做一方面可以避免盲目检索带来的误差，另一方面可以加快检索效率。</p>
 <p>第二步针对不同场景建立特征工程；比如弹窗场景检测矩形弹窗以及按钮，纯文本场景截取空白区域的文字即可。</p>
 <p>当然，在此过程中，一些特征工程算法是可以组合共用的，这些能力可以逐步沉淀。</p>
@@ -150,15 +163,18 @@
 <p>因此，仅需在预训练模型基础上，改造全连接层以适应实际业务场景。我们使用了ResNet 18 模型迁移训练，识别截图场景，进一步聚焦。</p>
 <h2 id="目标检测与图像分割">目标检测与图像分割</h2>
 <p>场景聚焦完成后，路由到对应的场景，检测场景中感兴趣的特征。在初期的简单场景中，采用了OpenCV算法提取图像特征，如弹窗、按钮、复选框、图标等等。这里面主要使用了自适应阈值化降噪、矩形检测、Hough变换和SIFT匹配等等。检测到感兴趣的领域就可以分割图片了。</p>
+<figure data-type="image" tabindex="9"><img src="https://sisypheanchen.github.io/post-images/1640606147472.png" alt="" loading="lazy"></figure>
 <p>SIFT特征匹配</p>
+<figure data-type="image" tabindex="10"><img src="https://sisypheanchen.github.io/post-images/1640606160269.png" alt="" loading="lazy"></figure>
 <p>OCR：当特征比对结果不符合我们预期时，需要有一种兜底的比对策略，基于内容的比对。OCR把图片中各元素的文字识别出来，然后与目标文案做相似度的比较，如果符合预期，也可以通过体验（一般的配置发布，主要是涉及页面文案的更新）。</p>
 <p>在当前的场景中，特征比对方式简单暴力，初期阶段由于样式简单丢弃了位置信息的比对，主要比对检测目标的类型以及数量是否一致。</p>
-<p>高并发高可用<br>
-Python在分类模型和OpenCV领域具良好的开源生态，我们在服务开发和部署采用了python语言。在服务的高并发与高可用上，做了以下工作。</p>
-<p>高并发：Gunicorn提升flask应用的处理能力，Gunicorn提供了三种不同的模式：work模式、多进程模式、伪线程”模式，用来提升并发处理能力，他们的适应场景不同。由于我们的场景更多受限于图片传输网络IO，采用了Gunicorn + gevent的协程工作模式。</p>
-<p>高可用：Supervisor是一个使用Python开发的进程管理程序supervisor ，可以监控和异常自动拉起监控的进程。</p>
-<p>未来规划<br>
-业务场景主要覆盖了样式相对比较固定的业务流程，高度自定义的表单样式尚未覆盖。并且，于人工特征目标检测，泛化能力相对较弱，对于表单场景挑战很大。下一步规划是基于已有数据，扩展模型，主要是训练深度模型如YOLO算法，来更好抽象场景，减少人工特征的工作。</p>
+<h2 id="高并发高可用">高并发高可用</h2>
+<p>Python在分类模型和OpenCV领域具良好的开源生态，我们在服务开发和部署采用了python语言。在服务的高并发与高可用上，做了以下工作。</p>
+<p><strong>高并发</strong>：Gunicorn提升flask应用的处理能力，Gunicorn提供了三种不同的模式：work模式、多进程模式、伪线程”模式，用来提升并发处理能力，他们的适应场景不同。由于我们的场景更多受限于图片传输网络IO，采用了Gunicorn + gevent的协程工作模式。</p>
+<p><strong>高可用</strong>：Supervisor是一个使用Python开发的进程管理程序supervisor ，可以监控和异常自动拉起监控的进程。</p>
+<h1 id="未来规划">未来规划</h1>
+<p>业务场景主要覆盖了样式相对比较固定的业务流程，高度自定义的表单样式尚未覆盖。并且，于人工特征目标检测，泛化能力相对较弱，对于表单场景挑战很大。下一步规划是基于已有数据，扩展模型，主要是训练深度模型如YOLO算法，来更好抽象场景，减少人工特征的工作。</p>
+<figure data-type="image" tabindex="11"><img src="https://sisypheanchen.github.io/post-images/1640606193701.png" alt="" loading="lazy"></figure>
 <h1 id="总结">总结</h1>
 <p>本文介绍了一种基于图像识别和目标检测的自动化测试方案， 相比基于前端的自动化测试方案，该方案不需要前期的录制工作即可实现自动化冒烟测试。对于场景较多，差异较大的业务问题，本文提出了一种“图像分类 + 目标检测”算法分层的方案，来简化特征工程。</p>
 <p>当然，我们的项目还在初期阶段，还有诸多深入探索空间，非常非常欢迎来一起探讨图像以及自动化测试相关领域的任何问题。</p>
@@ -175,16 +191,19 @@ Python在分类模型和OpenCV领域具良好的开源生态，我们在服务�
 <li><a href="#%E7%B3%BB%E7%BB%9F%E8%BE%B9%E7%95%8C">系统边界</a>
 <ul>
 <li><a href="#%E5%85%B3%E9%94%AE%E7%82%B9%E5%88%86%E6%9E%90">关键点分析</a></li>
+<li><a href="#%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9D%97">图像模块</a></li>
 <li><a href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E7%90%86%E8%A7%A3">测试用例的理解</a></li>
 </ul>
 </li>
 <li><a href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84">系统架构</a></li>
-<li><a href="#%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9D%97">图像模块</a>
+<li><a href="#%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9D%97-2">图像模块</a>
 <ul>
 <li><a href="#%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB">图像分类</a></li>
 <li><a href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2">目标检测与图像分割</a></li>
+<li><a href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E9%AB%98%E5%8F%AF%E7%94%A8">高并发高可用</a></li>
 </ul>
 </li>
+<li><a href="#%E6%9C%AA%E6%9D%A5%E8%A7%84%E5%88%92">未来规划</a></li>
 <li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
 </ul>
 
