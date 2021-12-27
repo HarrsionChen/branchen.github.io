@@ -1,22 +1,110 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://sisypheanchen.github.io</id>
-    <title>Sisyphean</title>
-    <updated>2021-12-27T11:30:50.798Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://sisypheanchen.github.io"/>
-    <link rel="self" href="https://sisypheanchen.github.io/atom.xml"/>
-    <subtitle>推着石头，寻求人生的意义</subtitle>
-    <logo>https://sisypheanchen.github.io/images/avatar.png</logo>
-    <icon>https://sisypheanchen.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Sisyphean</rights>
-    <entry>
-        <title type="html"><![CDATA[基于图像识别与目标检测的自动化测试]]></title>
-        <id>https://sisypheanchen.github.io/post/ji-yu-tu-xiang-shi-bie-yu-mu-biao-jian-ce-de-zi-dong-hua-ce-shi/</id>
-        <link href="https://sisypheanchen.github.io/post/ji-yu-tu-xiang-shi-bie-yu-mu-biao-jian-ce-de-zi-dong-hua-ce-shi/">
-        </link>
-        <updated>2021-12-27T10:59:23.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="背景">背景</h1>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>基于图像识别与目标检测的自动化测试 | Sisyphean</title>
+<link rel="shortcut icon" href="https://sisypheanchen.github.io/favicon.ico?v=1640604647394">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://sisypheanchen.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="基于图像识别与目标检测的自动化测试 | Sisyphean - Atom Feed" href="https://sisypheanchen.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="背景
+财付通风控每天都面临着各类的欺诈、盗号、作弊、套现以及营销活动被恶意刷单、恶意抢占资源等风险，所以风控团队采用的主要手段就是制定策略在实时业务请求中识别出恶意交易进行拦截，策略制定后对策略进行验证后上线。
+产品人员在策略等相关配置后，..." />
+    <meta name="keywords" content="自动化测试,图像识别,目标检测" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://sisypheanchen.github.io">
+  <img class="avatar" src="https://sisypheanchen.github.io/images/avatar.png?v=1640604647394" alt="">
+  </a>
+  <h1 class="site-title">
+    Sisyphean
+  </h1>
+  <p class="site-description">
+    推着石头，寻求人生的意义
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              基于图像识别与目标检测的自动化测试
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-12-27
+              </span>
+              <span>
+                9 min read
+              </span>
+              
+                <a href="https://sisypheanchen.github.io/tag/WVp5jUELC/" class="post-tag">
+                  # 自动化测试
+                </a>
+              
+                <a href="https://sisypheanchen.github.io/tag/AoZvqTRKsK/" class="post-tag">
+                  # 图像识别
+                </a>
+              
+                <a href="https://sisypheanchen.github.io/tag/IswhHC1Qpd/" class="post-tag">
+                  # 目标检测
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://sisypheanchen.github.io/post-images/ji-yu-tu-xiang-shi-bie-yu-mu-biao-jian-ce-de-zi-dong-hua-ce-shi.jpeg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="背景">背景</h1>
 <p>财付通风控每天都面临着各类的欺诈、盗号、作弊、套现以及营销活动被恶意刷单、恶意抢占资源等风险，所以风控团队采用的主要手段就是制定策略在实时业务请求中识别出恶意交易进行拦截，策略制定后对策略进行验证后上线。</p>
 <p>产品人员在策略等相关配置后，需要人为在测试环境（线上预发布）验证各配置的正确性。一般需要3-5个工作日才能完成验证，严重影响了策略发布效率。</p>
 <h2 id="案例说明">案例说明</h2>
@@ -74,38 +162,99 @@ Python在分类模型和OpenCV领域具良好的开源生态，我们在服务�
 <h1 id="总结">总结</h1>
 <p>本文介绍了一种基于图像识别和目标检测的自动化测试方案， 相比基于前端的自动化测试方案，该方案不需要前期的录制工作即可实现自动化冒烟测试。对于场景较多，差异较大的业务问题，本文提出了一种“图像分类 + 目标检测”算法分层的方案，来简化特征工程。</p>
 <p>当然，我们的项目还在初期阶段，还有诸多深入探索空间，非常非常欢迎来一起探讨图像以及自动化测试相关领域的任何问题。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://sisypheanchen.github.io/post/hello-gridea/</id>
-        <link href="https://sisypheanchen.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
-]]></content>
-    </entry>
-</feed>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a>
+<ul>
+<li><a href="#%E6%A1%88%E4%BE%8B%E8%AF%B4%E6%98%8E">案例说明</a></li>
+</ul>
+</li>
+<li><a href="#%E9%9D%A2%E4%B8%B4%E7%9A%84%E6%8C%91%E6%88%98">面临的挑战</a></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E8%BE%B9%E7%95%8C">系统边界</a>
+<ul>
+<li><a href="#%E5%85%B3%E9%94%AE%E7%82%B9%E5%88%86%E6%9E%90">关键点分析</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E7%90%86%E8%A7%A3">测试用例的理解</a></li>
+</ul>
+</li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84">系统架构</a></li>
+<li><a href="#%E5%9B%BE%E5%83%8F%E6%A8%A1%E5%9D%97">图像模块</a>
+<ul>
+<li><a href="#%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB">图像分类</a></li>
+<li><a href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2">目标检测与图像分割</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://sisypheanchen.github.io/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://sisypheanchen.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
