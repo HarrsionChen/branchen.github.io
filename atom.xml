@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://sisypheanchen.github.io</id>
     <title>Sisyphean</title>
-    <updated>2021-12-27T11:59:09.183Z</updated>
+    <updated>2022-02-21T07:50:25.878Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://sisypheanchen.github.io"/>
     <link rel="self" href="https://sisypheanchen.github.io/atom.xml"/>
     <subtitle>推着石头，寻求人生的意义</subtitle>
     <logo>https://sisypheanchen.github.io/images/avatar.png</logo>
     <icon>https://sisypheanchen.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Sisyphean</rights>
+    <rights>All rights reserved 2022, Sisyphean</rights>
     <entry>
         <title type="html"><![CDATA[基于图像识别与目标检测的自动化测试]]></title>
         <id>https://sisypheanchen.github.io/post/ji-yu-tu-xiang-shi-bie-yu-mu-biao-jian-ce-de-zi-dong-hua-ce-shi/</id>
@@ -90,6 +90,92 @@
 <h1 id="总结">总结</h1>
 <p>本文介绍了一种基于图像识别和目标检测的自动化测试方案， 相比基于前端的自动化测试方案，该方案不需要前期的录制工作即可实现自动化冒烟测试。对于场景较多，差异较大的业务问题，本文提出了一种“图像分类 + 目标检测”算法分层的方案，来简化特征工程。</p>
 <p>当然，我们的项目还在初期阶段，还有诸多深入探索空间，非常非常欢迎来一起探讨图像以及自动化测试相关领域的任何问题。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Spring boot 单元测试]]></title>
+        <id>https://sisypheanchen.github.io/post/spring-boot-dan-yuan-ce-shi/</id>
+        <link href="https://sisypheanchen.github.io/post/spring-boot-dan-yuan-ce-shi/">
+        </link>
+        <updated>2021-04-29T07:44:49.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇文章主要介绍spring boot单元测试遇到的<strong>依赖注入</strong>的问题。<br>
+传统的spring boot应用大量使用注解的方式，将对象的管理交给spring boot内置容器</p>
+<p>在进行单元测试的时候，常规的单元测试并没有启动容器去管理实例，以及容器的上下文信息。</p>
+<p>本文主要针对这两点进行了讲解，并提出了一个隔离数据库的方法</p>
+<p>https://www.baeldung.com/spring-boot-testing</p>
+<p>以下是spring boot项目的demo, 在实际运行中，有几点需要注意<br>
+1.SpringBootTest 注解，跟文章稍有不同，可能是版本的差异；class中的application即为该项目的application，引入包的时候需要匹配<br>
+2.TestPropertySource是提供上下文信息的地方，这里指定期望的配置路径即可<br>
+3.启动单元测试的时候，会编译整个项目</p>
+<pre><code>package com.tenpay.risk.rap.basic.core.service;
+
+import com.tencent.ard.common.api.entity.ResponseEntity;
+import com.tenpay.risk.rap.basic.api.request.var.AccountAuthorityApplyReqVo;
+import com.tenpay.risk.rap.basic.api.request.var.VarAccountAuthorityReqVo;
+import com.tenpay.risk.rap.basic.api.response.var.VarAccountAuthorityVo;
+import com.tenpay.risk.rap.basic.core.Application;
+import com.tenpay.risk.rap.basic.core.enums.EnumApproveStatus;
+import com.tenpay.risk.rap.basic.core.enums.EnumVarOperateType;
+import com.tenpay.risk.rap.basic.core.repository.var.repository.AccountAuthorityRecordRepository;
+import com.tenpay.risk.rap.basic.core.service.approve.VarApproveService;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT, classes = Application.class)
+@AutoConfigureMockMvc
+@TestPropertySource(locations = &quot;classpath:application.yml&quot;)
+class AccountAuthorityServiceTest {
+
+
+    @Autowired
+    AccountAuthorityRecordRepository accountAuthorityRecordRepository;
+
+    @Autowired
+    AccountAuthorityService accountAuthorityService;
+
+    @Autowired
+    VarApproveService varApproveService;
+
+    @Test
+    public void should_get_1_account_when_apply_1_account(){
+        AccountAuthorityApplyReqVo applyReqVo = new AccountAuthorityApplyReqVo();
+        applyReqVo.setOperator(&quot;branchen&quot;);
+        applyReqVo.setAccount(&quot;branchen@tenpay.com&quot;);
+        applyReqVo.setObjectType(1);
+        applyReqVo.setVarId(1001L);
+        applyReqVo.setOperateType(EnumVarOperateType.QUERY.getCode());
+        applyReqVo.setExistAccountList(new ArrayList&lt;&gt;());
+        applyReqVo.setRemark(&quot;tianjia&quot;);
+        accountAuthorityService.apply(applyReqVo);
+
+        verify(varApproveService.accountApprovePropose(applyReqVo));
+        accountAuthorityRecordRepository.query(&quot;branchen&quot;, 1, EnumVarOperateType.QUERY.getCode(),
+                1001L, &quot;branchen@tenpay.com&quot;, EnumApproveStatus.PROCESSING.getCode());
+
+        VarAccountAuthorityReqVo varAccountAuthorityReqVo = new VarAccountAuthorityReqVo();
+        varAccountAuthorityReqVo.setAccount(&quot;branchen@tenpay.com&quot;);
+        varAccountAuthorityReqVo.setObjectType(1);
+        varAccountAuthorityReqVo.setVarId(1001L);
+        varAccountAuthorityReqVo.setOperateType(EnumVarOperateType.QUERY.getCode());
+        varAccountAuthorityReqVo.setOperator(&quot;branchen&quot;);
+        ResponseEntity&lt;VarAccountAuthorityVo&gt; responseEntitys = accountAuthorityService.getAuthority(varAccountAuthorityReqVo);
+
+        assertTrue(responseEntitys.getData().getAccountList().contains(&quot;branchen@tenpay.com&quot;));
+    }
+
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
